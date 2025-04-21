@@ -1,0 +1,16 @@
+# next-version: 0.1.1
+mode: ContinuousDelivery
+branches:
+  main:
+    regex: ^main$
+    increment: Minor
+    is-release-branch: true
+
+  yosef-bump:
+    regex: ^yosef-bump$
+    increment: Patch
+    label: yosef-bump
+
+ignore:
+  sha: []
+merge-message-formats: {}

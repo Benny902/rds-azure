@@ -1,0 +1,30 @@
+<h2>{label}</h2>
+<select class="endpoint">
+  <option value="/v1/localities">GET /v1/localities</option>
+  <option value="/v1/localities/{id}">GET /v1/localities/{id}</option>
+  <option value="/v1/localities/{id}/streets">GET /v1/localities/{id}/streets</option>
+</select>
+<div class="correlationWrapper">
+  <input type="text" class="correlationId" placeholder="X-Correlation-ID" />
+  <button class="refreshIdBtn" title="Generate new Correlation ID">🔄</button>
+</div>
+<input type="text" class="resourceId hidden" placeholder="Enter ID or Name" list="{datalist-id}" />
+<datalist id="{datalist-id}"></datalist>
+<button class="submitBtn">Submit Single Request</button>
+<pre class="headersOutput"></pre>
+<pre class="output"></pre>
+<select class="resultDropdown hidden"></select>
+<div class="mapContainer hidden" style="width: 100%; height: 400px; margin-top: 2rem;"></div>
+<hr />
+<h3>Benchmark</h3>
+<div class="inline-input">
+  <label>Virtual Users:</label>
+  <input type="number" class="virtualUsers" value="10" />
+</div>
+<div class="inline-input">
+  <label>Duration (sec):</label>
+  <input type="number" class="duration" value="10" />
+</div>
+<button class="runBenchmark">Run Benchmark</button>
+<pre class="benchmarkOutput"></pre>
+<button class="exportJson">Export JSON</button>

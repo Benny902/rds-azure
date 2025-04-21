@@ -1,0 +1,202 @@
+version: '3.7'
+
+services:
+  ##########################
+  # Azure Cosmos DB Emulator
+  ##########################
+  cosmosdb:
+      image: mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:vnext-preview
+      container_name: cosmosdb
+      tty: true
+      mem_limit: 4G
+      environment:
+        - AZURE_COSMOS_EMULATOR_PARTITION_COUNT=2
+        - AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE=true
+        - AZURE_COSMOS_EMULATOR_IP_ADDRESS_OVERRIDE=0.0.0.0
+        - AZURE_COSMOS_EMULATOR_ALLOW_NONSSL_CONNECTIONS=true
+        - GATEWAY_PUBLIC_ENDPOINT=cosmosdb
+      ports:
+        - "8081:8081"
+        - "10250-10255:10250-10255"
+        - "1234:1234"
+      networks:
+        - rds-network
+      restart: unless-stopped
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8081/"]
+        interval: 20s
+        timeout: 10s
+        retries: 10
+        start_period: 60s
+
+
+
+  ##########################
+  # Geolocation Manager Service + Dapr Sidecar
+  ##########################
+  rds.backend.manager.geolocation:
+    image: ${DOCKER_REGISTRY-}rdsbackendmanagergeolocation
+    build:
+      context: .
+      dockerfile: Managers/RDS.BackEnd.Manager.Geolocation/Dockerfile
+      args:
+        GIT_COMMIT: ${GIT_COMMIT}
+        BUILD_TIME: ${BUILD_TIME}
+        VERSION: ${VERSION}
+    ports:
+      - "64402:80" 
+    networks:
+      - rds-network
+    environment:
+      - ASPNETCORE_URLS=http://rds.backend.manager.geolocation:80
+    depends_on:
+      - zipkin
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  rds.backend.manager.geolocation-dapr:
+    image: "daprio/daprd:1.14.4"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+      "-app-id", "geolocation-manager",
+      "-app-port", "80",
+      "-dapr-http-port", "3500",
+      "-resources-path", "/dapr/components",
+      "-config", "/dapr/config.yaml"]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - rds.backend.manager.geolocation
+    network_mode: "service:rds.backend.manager.geolocation"
+
+  ##########################
+  # Geolocation Information Service + Dapr Sidecar
+  ##########################
+  rds.backend.accessor.geolocationinformation:
+    image: ${DOCKER_REGISTRY-}rdsbackendaccessorgeolocationinformation
+    build:
+      context: .
+      dockerfile: Accessors/RDS.BackEnd.Accessor.GeolocationInformation/Dockerfile
+      args:
+        GIT_COMMIT: ${GIT_COMMIT}
+        BUILD_TIME: ${BUILD_TIME}
+        VERSION: ${VERSION}
+    networks:
+      - rds-network
+    environment:
+      - ASPNETCORE_URLS=http://rds.backend.accessor.geolocationinformation:80
+    depends_on:
+        zipkin:
+          condition: service_started
+    restart: always
+
+  rds.backend.accessor.geolocationinformation-dapr:
+    image: "daprio/daprd:1.14.4"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+      "-app-id", "geolocation-information-accessor",
+      "-app-port", "80",
+      "-dapr-http-port", "3500",
+      "-resources-path", "/dapr/components",
+      "-config", "/dapr/config.yaml"]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - rds.backend.accessor.geolocationinformation
+    network_mode: "service:rds.backend.accessor.geolocationinformation"
+
+  ##########################
+  # Government Geolocation Provider Service + Dapr Sidecar
+  ##########################
+  rds.backend.accessor.governmentgeolocationprovider:
+    image: ${DOCKER_REGISTRY-}rdsbackendaccessorgovernmentgeolocationprovider
+    build:
+      context: .
+      dockerfile: Accessors/RDS.BackEnd.Accessor.GovernmentGeolocationProvider/Dockerfile
+      args:
+        GIT_COMMIT: ${GIT_COMMIT}
+        BUILD_TIME: ${BUILD_TIME}
+        VERSION: ${VERSION}
+    networks:
+      - rds-network
+    environment:
+      - ASPNETCORE_URLS=http://rds.backend.accessor.governmentgeolocationprovider:80
+    depends_on:
+      - zipkin
+    restart: always
+
+  rds.backend.accessor.governmentgeolocationprovider-dapr:
+    image: "daprio/daprd:1.14.4"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+      "-app-id", "government-geolocation-provider-accessor",
+      "-app-port", "80",
+      "-dapr-http-port", "3500",
+      "-resources-path", "/dapr/components",
+      "-config", "/dapr/config.yaml"]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - rds.backend.accessor.governmentgeolocationprovider
+    network_mode: "service:rds.backend.accessor.governmentgeolocationprovider"
+
+  ##############################
+  # Redis state store (State Store & Pub/Sub) - not in use
+  ##############################
+  # redis:
+  #   image: "redis:alpine"
+  #   hostname: redisserver
+  #   ports:
+  #     - "6379:6379"
+  #   command: redis-server 
+  #   environment:
+  #     - REDIS_REPLICATION_MODE=master
+  #   networks:
+  #     - rds-network
+  #   restart: always
+
+  # Zipkin (Distributed Tracing)
+  zipkin:
+    image: "openzipkin/zipkin"
+    ports:
+      - "9411:9411"
+    networks:
+      - rds-network
+    restart: always
+
+  # Dapr Dashboard
+  dapr-dashboard:
+    image: daprio/dashboard:latest
+    container_name: dashboard
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./dapr/:/home/nonroot/.dapr"
+    networks:
+      - rds-network
+    restart: always
+
+  ##############################
+  # Network Configuration
+  ##############################
+networks:
+  rds-network:

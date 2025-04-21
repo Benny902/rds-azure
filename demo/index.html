@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>API Comparison - Monolith vs Microservices</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <div class="comparison-wrapper">
+
+    <div class="comparison-row">
+      
+      <div class="container" id="monolith"></div>
+  
+      <div class="container" id="microservice"></div>
+
+    </div>
+
+
+    <div style="max-width: 1200px; margin: -4rem; font-family: sans-serif; font-size: 1.2rem; color: #333;">
+      <div id="run-both-wrapper">
+        <button id="runBothBtn">▶ Run Both Benchmarks</button>
+      </div>
+      <h3>📊 Benchmark Metrics Explained</h3>
+      <ul>
+        <li><strong>rps</strong> = Requests Per Second (higher is better) </li>
+        <li><strong>avg_ms</strong> = Average response time (lower is better)</li>
+        <li><strong>min_ms</strong> = Fastest single request</li>
+        <li><strong>max_ms</strong> = Slowest single request</li>
+        <li><strong>p50</strong> = Median latency (50% of requests were faster)</li>
+        <li><strong>p90</strong> = 90th percentile (90% of requests were faster)</li>
+        <li><strong>p99</strong> = 99th percentile (only 1% were slower)</li>
+        <li><strong>failed</strong> = Failed requests count (should be <code>0</code>)</li>
+        <li><strong>timestamp</strong> = When this benchmark was run</li>
+      </ul>
+    </div>
+
+    <div id="latency-chart-wrapper" class="hidden">
+      <canvas id="latencyChartCanvas"></canvas>
+    </div>
+  
+
+  </div>
+
+  <script src="scripts.js" type="module"></script>
+
+</body>
+</html>

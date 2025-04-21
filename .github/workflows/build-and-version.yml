@@ -1,0 +1,71 @@
+name: build-and-version
+
+on:
+  pull_request:
+    branches:
+      - main  # On Pull Request to main
+
+  push:
+    tags:
+      - 'v*'  # On Tag Push
+
+  workflow_dispatch:  # Manual Execution GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # must for GitVersion
+
+    - name: Setup .NET 9
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Setup GitVersion
+      uses: gittools/actions/gitversion/setup@v1
+      with:
+        versionSpec: '6.0.0'
+
+    - name: Run GitVersion
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v1
+
+    - name: Output calculated version
+      run: |
+        echo "GitVersion FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
+        echo "Commit SHA: ${{ steps.gitversion.outputs.sha }}"
+
+    - name: Build Manager Docker Image
+      run: |
+        docker build \
+          -f backend/ReferenceDataServiceBackEnd/Managers/RDS.BackEnd.Manager.Geolocation/Dockerfile \
+          -t rdsbackendmanagergeolocation:${{ steps.gitversion.outputs.fullSemVer }} \
+          --build-arg GIT_COMMIT=${{ steps.gitversion.outputs.sha }} \
+          --build-arg BUILD_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ) \
+          --build-arg VERSION=${{ steps.gitversion.outputs.fullSemVer }} \
+          backend/ReferenceDataServiceBackEnd
+
+    - name: Build GeolocationInformation Accessor Docker Image
+      run: |
+        docker build \
+          -f backend/ReferenceDataServiceBackEnd/Accessors/RDS.BackEnd.Accessor.GeolocationInformation/Dockerfile \
+          -t rdsbackendaccessorgeolocationinformation:${{ steps.gitversion.outputs.fullSemVer }} \
+          --build-arg GIT_COMMIT=${{ steps.gitversion.outputs.sha }} \
+          --build-arg BUILD_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ) \
+          --build-arg VERSION=${{ steps.gitversion.outputs.fullSemVer }} \
+          backend/ReferenceDataServiceBackEnd
+
+    - name: Build GovernmentGeolocationProvider Accessor Docker Image
+      run: |
+        docker build \
+          -f backend/ReferenceDataServiceBackEnd/Accessors/RDS.BackEnd.Accessor.GovernmentGeolocationProvider/Dockerfile \
+          -t rdsbackendaccessorgovernmentgeolocationprovider:${{ steps.gitversion.outputs.fullSemVer }} \
+          --build-arg GIT_COMMIT=${{ steps.gitversion.outputs.sha }} \
+          --build-arg BUILD_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ) \
+          --build-arg VERSION=${{ steps.gitversion.outputs.fullSemVer }} \
+          backend/ReferenceDataServiceBackEnd

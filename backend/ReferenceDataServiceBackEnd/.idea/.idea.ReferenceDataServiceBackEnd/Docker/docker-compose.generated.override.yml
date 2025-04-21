@@ -1,0 +1,63 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.7"
+services:
+  rds.backend.accessor.geolocationinformation:
+    build:
+      context: "C:\\Users\\97252\\Desktop\\rds\\backend\\ReferenceDataServiceBackEnd"
+      dockerfile: "Accessors/RDS.BackEnd.Accessor.GeolocationInformation/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/RDS.BackEnd.Accessor.GeolocationInformation.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "rdsbackendaccessorgeolocationinformation:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\97252\\Desktop\\rds\\backend\\ReferenceDataServiceBackEnd\\Accessors\\\
+      RDS.BackEnd.Accessor.GeolocationInformation:/app:rw"
+    - "C:\\Users\\97252\\Desktop\\rds\\backend\\ReferenceDataServiceBackEnd:/src:rw"
+    - "C:\\Users\\97252\\AppData\\Roaming\\Microsoft\\UserSecrets:/root/.microsoft/usersecrets"
+    - "C:\\Users\\97252\\.nuget\\packages:/root/.nuget/packages"
+    working_dir: "/app"
+  rds.backend.accessor.governmentgeolocationprovider:
+    build:
+      context: "C:\\Users\\97252\\Desktop\\rds\\backend\\ReferenceDataServiceBackEnd"
+      dockerfile: "Accessors/RDS.BackEnd.Accessor.GovernmentGeolocationProvider/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/RDS.BackEnd.Accessor.GovernmentGeolocationProvider.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "rdsbackendaccessorgovernmentgeolocationprovider:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\97252\\Desktop\\rds\\backend\\ReferenceDataServiceBackEnd\\Accessors\\\
+      RDS.BackEnd.Accessor.GovernmentGeolocationProvider:/app:rw"
+    - "C:\\Users\\97252\\Desktop\\rds\\backend\\ReferenceDataServiceBackEnd:/src:rw"
+    - "C:\\Users\\97252\\AppData\\Roaming\\Microsoft\\UserSecrets:/root/.microsoft/usersecrets"
+    - "C:\\Users\\97252\\.nuget\\packages:/root/.nuget/packages"
+    working_dir: "/app"
+  rds.backend.manager.geolocation:
+    build:
+      context: "C:\\Users\\97252\\Desktop\\rds\\backend\\ReferenceDataServiceBackEnd"
+      dockerfile: "Managers/RDS.BackEnd.Manager.Geolocation/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/RDS.BackEnd.Manager.Geolocation.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "rdsbackendmanagergeolocation:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\97252\\Desktop\\rds\\backend\\ReferenceDataServiceBackEnd\\Managers\\\
+      RDS.BackEnd.Manager.Geolocation:/app:rw"
+    - "C:\\Users\\97252\\Desktop\\rds\\backend\\ReferenceDataServiceBackEnd:/src:rw"
+    - "C:\\Users\\97252\\AppData\\Roaming\\Microsoft\\UserSecrets:/root/.microsoft/usersecrets"
+    - "C:\\Users\\97252\\.nuget\\packages:/root/.nuget/packages"
+    working_dir: "/app"

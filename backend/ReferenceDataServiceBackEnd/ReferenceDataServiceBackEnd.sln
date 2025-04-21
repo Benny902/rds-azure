@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Managers", "Managers", "{73911E34-2933-407B-BF7C-867952835073}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accessors", "Accessors", "{874BC1C6-3375-4787-96DF-BFA28D091375}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{625DFADC-6846-4A55-A82A-D127CC55A6F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{A21013FF-1CA8-4B7A-85E2-850B5D1A87DD}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\config.yaml = dapr\config.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{75AF97DB-8CC2-446A-8881-9075646D930E}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\components\dapr-secretstore.json = dapr\components\dapr-secretstore.json
+		dapr\components\secretstore.yaml = dapr\components\secretstore.yaml
+		dapr\components\statestore.yaml = dapr\components\statestore.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDS.BackEnd.Accessor.GeolocationInformation", "Accessors\RDS.BackEnd.Accessor.GeolocationInformation\RDS.BackEnd.Accessor.GeolocationInformation.csproj", "{A83F3195-406B-48C8-8173-3DC31A58BDDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDS.BackEnd.Accessor.GovernmentGeolocationProvider", "Accessors\RDS.BackEnd.Accessor.GovernmentGeolocationProvider\RDS.BackEnd.Accessor.GovernmentGeolocationProvider.csproj", "{B68B6CBB-4577-490E-95DF-C6881873F86B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDS.BackEnd.Manager.Geolocation", "Managers\RDS.BackEnd.Manager.Geolocation\RDS.BackEnd.Manager.Geolocation.csproj", "{2C9D6C31-E295-4F0B-9565-620E61AE5C58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDS.BackEnd.Accessor.GovernmentGeolocationProvider.Tests", "Test\RDS.Backend.Unit.Tests\RDS.BackEnd.Accessor.GovernmentGeolocationProvider.Tests\RDS.BackEnd.Accessor.GovernmentGeolocationProvider.Tests.csproj", "{19896CD3-0241-45C7-8E97-B6BD96CD95D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B210DF29-7A7C-43A3-A478-15924E92D97E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDS.BackEnd.Accessor.GeolocationInformation.Test", "Test\RDS.Backend.Unit.Tests\RDS.BackEnd.Accessor.GeolocationInformation.Test\RDS.BackEnd.Accessor.GeolocationInformation.Test.csproj", "{F07FB56E-4D71-4341-957C-6F632DC0C809}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadTests", "Test\LoadTests\LoadTests.csproj", "{28103F1D-C26D-46CA-9BB0-53CB835A7416}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{625DFADC-6846-4A55-A82A-D127CC55A6F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{625DFADC-6846-4A55-A82A-D127CC55A6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{625DFADC-6846-4A55-A82A-D127CC55A6F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{625DFADC-6846-4A55-A82A-D127CC55A6F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A83F3195-406B-48C8-8173-3DC31A58BDDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A83F3195-406B-48C8-8173-3DC31A58BDDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A83F3195-406B-48C8-8173-3DC31A58BDDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A83F3195-406B-48C8-8173-3DC31A58BDDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68B6CBB-4577-490E-95DF-C6881873F86B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68B6CBB-4577-490E-95DF-C6881873F86B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68B6CBB-4577-490E-95DF-C6881873F86B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68B6CBB-4577-490E-95DF-C6881873F86B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C9D6C31-E295-4F0B-9565-620E61AE5C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C9D6C31-E295-4F0B-9565-620E61AE5C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C9D6C31-E295-4F0B-9565-620E61AE5C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C9D6C31-E295-4F0B-9565-620E61AE5C58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19896CD3-0241-45C7-8E97-B6BD96CD95D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19896CD3-0241-45C7-8E97-B6BD96CD95D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19896CD3-0241-45C7-8E97-B6BD96CD95D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19896CD3-0241-45C7-8E97-B6BD96CD95D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F07FB56E-4D71-4341-957C-6F632DC0C809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07FB56E-4D71-4341-957C-6F632DC0C809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07FB56E-4D71-4341-957C-6F632DC0C809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07FB56E-4D71-4341-957C-6F632DC0C809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28103F1D-C26D-46CA-9BB0-53CB835A7416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28103F1D-C26D-46CA-9BB0-53CB835A7416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28103F1D-C26D-46CA-9BB0-53CB835A7416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28103F1D-C26D-46CA-9BB0-53CB835A7416}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{75AF97DB-8CC2-446A-8881-9075646D930E} = {A21013FF-1CA8-4B7A-85E2-850B5D1A87DD}
+		{A83F3195-406B-48C8-8173-3DC31A58BDDF} = {874BC1C6-3375-4787-96DF-BFA28D091375}
+		{B68B6CBB-4577-490E-95DF-C6881873F86B} = {874BC1C6-3375-4787-96DF-BFA28D091375}
+		{2C9D6C31-E295-4F0B-9565-620E61AE5C58} = {73911E34-2933-407B-BF7C-867952835073}
+		{19896CD3-0241-45C7-8E97-B6BD96CD95D1} = {B210DF29-7A7C-43A3-A478-15924E92D97E}
+		{F07FB56E-4D71-4341-957C-6F632DC0C809} = {B210DF29-7A7C-43A3-A478-15924E92D97E}
+		{28103F1D-C26D-46CA-9BB0-53CB835A7416} = {B210DF29-7A7C-43A3-A478-15924E92D97E}
+	EndGlobalSection
+EndGlobal

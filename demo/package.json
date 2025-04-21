@@ -1,0 +1,9 @@
+{
+    "name": "localities-frontend",
+    "scripts": {
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "vite": "^5.0.0"
+    }
+}
